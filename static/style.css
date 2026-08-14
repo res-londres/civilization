@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    align-items: center;
+    background: #7F2122;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+.login-card {
+    align-items: center;
+    background: #FACD1E;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.login-card button {
+    padding: 2px 1rem;
+}
+.login-card h1 {
+    background: linear-gradient(0deg, #FACD1E, #E5DBB7);
+    border-radius: 1rem;
+    text-align: center;
+    padding: 2rem 4rem;
+}
+.login-card input {
+    padding: 2px;
+}
+.login-card p {
+    padding-bottom: 1rem;
+}
+#login-container {
+    background: #D32929;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
+/*
+Rose (#D32929), Gold Bar (#FACD1E), Shiny Pearl (#FFF5E6), Aged Paper (#E5DBB7), Comfort Khaki (#CAC198) and Dark Rose (#7F2122)
+*/
