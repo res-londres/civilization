@@ -59,6 +59,8 @@ body {
 }
 .login-card p {
     color: #FACD1E;
+}
+.pad-bottom {
     padding-bottom: 1rem;
 }
 

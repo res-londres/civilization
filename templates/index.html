@@ -7,17 +7,18 @@
     <title>Civilization</title>
 </head>
 <body>
-    <div id="login-container" style="display:none;">
+    <div id="login-container">
         <div class="login-card">
             <img src="../assets/images/sol-invictus.png" width="150px" height="150px" loading="lazy">
             <h1>CIVILIZATION</h1>
             <p>Enter your name to join the world</p>
+            <p class="pad-bottom">(or leave blank for a random name)</p>
             <input type="text" id="player-name-input" placeholder="Enter your name...">
-            <button>Join World</button>
+            <button onclick="joinGame()">Join World</button>
         </div>
     </div>
 
-    <main id="game-container">
+    <main id="game-container" style="display:none;">
         <section class="left-sidebar">
             <h1>CIVILIZATION</h1>
             <div class="profile-card">
@@ -69,5 +70,7 @@
             </div>
         </section>
     </main>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script src="../static/script.js"></script>
 </body>
 </html>
