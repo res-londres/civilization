@@ -7,7 +7,7 @@
     <title>Civilization</title>
 </head>
 <body>
-    <div id="login-container">
+    <div id="login-container" style="display:none;">
         <div class="login-card">
             <img src="../assets/images/sol-invictus.png" width="150px" height="150px" loading="lazy">
             <h1>CIVILIZATION</h1>
@@ -16,5 +16,58 @@
             <button>Join World</button>
         </div>
     </div>
+
+    <main id="game-container">
+        <section class="left-sidebar">
+            <h1>CIVILIZATION</h1>
+            <div class="profile-card">
+                <h3 id="player-name">_unnamed_player</h3>
+                <p>Efficiency: <span id="efficiency">NONE</span></p>
+                <p>Mastery: <span id="mastery">NONE</span></p>
+                <p>Artistry: <span id="artistry">0</span></p>
+                <button>Retire</button>
+            </div>
+            <nav>
+                <a href="#" data-page="main" class="active">Main</a>
+                <a href="#" data-page="inventory">Inventory</a>
+                <a href="#" data-page="crafting">Crafting</a>
+                <a href="#" data-page="resources">Resources</a>
+                <a href="#" data-page="players">Players</a>
+                <a href="#" data-page="properties">Properties</a>
+                <a href="#" data-page="unclaimed">Unclaimed</a>
+            </nav>
+        </section>
+        <section class="content">
+            <div id="page-main" class="page-content">
+                main page
+            </div>
+            <div id="page-inventory" class="page-content" style="display:none;">
+                inventory page
+            </div>
+            <div id="page-crafting" class="page-content" style="display:none;">
+                crafting page
+            </div>
+            <div id="page-resources" class="page-content" style="display:none;">
+                resources page
+            </div>
+            <div id="page-players" class="page-content" style="display:none;">
+                players page
+            </div>
+            <div id="page-properties" class="page-content" style="display:none;">
+                properties page
+            </div>
+            <div id="page-unclaimed" class="page-content" style="display:none;">
+                unclaimed page
+            </div>
+        </section>
+        <section class="right-sidebar">
+            <div class="market-board">
+                market
+            </div>
+            <div class="global-chat">
+                chat
+            </div>
+        </section>
+    </main>
 </body>
 </html>
