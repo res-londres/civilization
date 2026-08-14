@@ -9,13 +9,12 @@
     box-sizing: border-box;
 }
 body {
-    background: #7F2122;
     min-height: 100vh;
 }
 /* ----------login---------- */
 #login-container {
     align-items: center;
-    background: #7F2122;
+    background-image: url("../assets/images/red-texture.png");
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -23,7 +22,7 @@ body {
 }
 .login-card {
     align-items: center;
-    background: #D32929;
+    background: #7F2122;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -33,7 +32,7 @@ body {
     width: 100%;
 }
 .login-card button {
-    background: #7F2122;
+    background: #D32929;
     border: none;
     border-radius: 4px;
     color: #FACD1E;
@@ -66,6 +65,7 @@ body {
 
 /* ----------game----------- */
 #game-container {
+    background-image: url("../assets/images/red-texture.png");
     display: grid;
     grid-template-columns: 250px 1fr 300px;
     min-height: 100vh;
@@ -73,7 +73,7 @@ body {
 
 /* ----------left-sidebar----------- */
 .left-sidebar {
-    background: #7F2122;
+    background: transparent;
     color: #FFF5E6;
     display: flex;
     flex-direction: column;
@@ -90,12 +90,12 @@ body {
 
 /* ----------profile-card----------- */
 .profile-card {
-    background: #D32929;
+    background: #7F2122;
     border-radius: 8px;
     padding: 1rem;
 }
 .profile-card button {
-    background: #7F2122;
+    background: #D32929;
     border: none;
     border-radius: 4px;
     color: #FACD1E;
@@ -133,7 +133,7 @@ nav a {
     transition: all 0.3s;
 }
 nav a:hover {
-    background: #D32929;
+    background: #7F2122;
     padding-left: 1.25rem;
 }
 nav a.active {
@@ -157,7 +157,7 @@ nav a.active {
 
 /* ----------right-sidebar----------- */
 .right-sidebar {
-    background: #D32929;
+    background: transparent;
     color: #FFF5E6;
     display: flex;
     flex-direction: column;
