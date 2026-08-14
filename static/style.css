@@ -1,41 +1,62 @@
+@font-face {
+    /* doesnt work for some reason */
+    font-family: "Trajanus";
+    src: url("../assets/fonts/trajanus-roman.ttf");
+}
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 body {
+    background: #7F2122;
+    min-height: 100vh;
+}
+#login-container {
     align-items: center;
     background: #7F2122;
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    padding: 2rem;
 }
 .login-card {
     align-items: center;
-    background: #FACD1E;
+    background: #D32929;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 400px;
+    padding: 2rem;
+    width: 100%;
 }
 .login-card button {
-    padding: 2px 1rem;
+    background: #7F2122;
+    border: none;
+    border-radius: 4px;
+    color: #FACD1E;
+    cursor: pointer;
+    padding: 0.5rem 2rem;
+    transition: transform 0.3s;
+}
+.login-card button:hover {
+    transform: scale(1.05);
 }
 .login-card h1 {
-    background: linear-gradient(0deg, #FACD1E, #E5DBB7);
-    border-radius: 1rem;
+    color: #FACD1E;
+    padding: 1.5rem 0 1rem;
     text-align: center;
-    padding: 2rem 4rem;
 }
 .login-card input {
-    padding: 2px;
+    border: 1px solid #7F2122;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
 }
 .login-card p {
+    color: #FACD1E;
     padding-bottom: 1rem;
-}
-#login-container {
-    background: #D32929;
-    border-radius: 2rem;
-    padding: 1rem;
 }
 
 /*
