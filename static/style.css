@@ -53,14 +53,17 @@ body {
 .login-card input {
     border: 1px solid #7F2122;
     border-radius: 5px;
-    margin-bottom: 1rem;
+    min-width: 300px;
     padding: 0.5rem 1rem;
 }
 .login-card p {
     color: #FACD1E;
+    margin-bottom: 1rem;
 }
-.pad-bottom {
-    padding-bottom: 1rem;
+#invalid-name-message {
+    margin-bottom: 0.75rem;
+    margin-right: 2.5rem;
+    min-height: 1.2rem;
 }
 
 /* ----------game----------- */

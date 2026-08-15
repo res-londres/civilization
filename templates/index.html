@@ -12,9 +12,9 @@
             <img src="../assets/images/sol-invictus.png" width="150px" height="150px" loading="lazy">
             <h1>CIVILIZATION</h1>
             <p>Enter your name to join the world</p>
-            <p class="pad-bottom">(or leave blank for a random name)</p>
-            <input type="text" id="display-name-input" placeholder="Enter your name...">
-            <button onclick="joinGame()">Join World</button>
+            <input type="text" id="display-name-input" placeholder="Enter your name..." onkeydown="if (event.key === 'Enter') joinGame();">
+            <p id="invalid-name-message"></p>
+            <button id="join-button" onclick="joinGame()">Join World</button>
         </div>
     </div>
 

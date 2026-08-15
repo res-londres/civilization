@@ -1,14 +1,24 @@
 
 var socket = io();
 
-function joinGame() {
-    var displayNameInput = document.getElementById('display-name-input');
-    var displayName = displayNameInput.value.trim();
-    
-    if (!displayName) {
-        displayName = 'player_' + Math.floor(Math.random() * 10000);
-        displayNameInput.value = displayName;
+var displayNameInput = document.getElementById('display-name-input');
+var invalidNameMessage = document.getElementById('invalid-name-message');
+var joinButton = document.getElementById('join-button');
+displayNameInput.addEventListener('input', () => {
+    if (displayNameInput.value.length > 0) {
+        invalidNameMessage.textContent = '';
     }
+});
+
+function joinGame() {
+    var displayName = displayNameInput.value.trim();
+    if (!displayName) {
+        invalidNameMessage.textContent = 'Please enter a valid alphanumeric name!';
+        displayNameInput.focus();
+        return;
+    }
+    joinButton.disabled = true;
+    joinButton.textContent = 'Connecting...';
     socket.emit('join', {displayName: displayName});
 }
 socket.on('join_success', function(data) {
@@ -17,6 +27,12 @@ socket.on('join_success', function(data) {
     
     document.getElementById('display-name').textContent = data.name;
 });
+socket.on('join_error', () => {
+    invalidNameMessage.textContent = 'Please enter a valid alphanumeric name!';
+    displayNameInput.focus();
+    joinButton.disabled = false;
+    joinButton.textContent = 'Join World';
+})
 
 document.querySelectorAll('nav a').forEach(function(link) {
     link.addEventListener('click', function(e) {

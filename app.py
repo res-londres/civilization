@@ -37,7 +37,11 @@ def handle_join(data):
     all_players = db.get_all_players('full_id')
     existing_ids = [p['full_id'] for p in all_players if p.get('full_id')]
     # give new player unique id
-    full_id = help.generate_player_id(display_name, existing_ids)
+    try:
+        full_id = help.generate_player_id(display_name, existing_ids)
+    except ValueError:
+        emit('join_error')
+        return
     # create new player
     player_data = db.create_player(full_id, display_name)
     # request, update player socket id
