@@ -5,7 +5,10 @@ from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
 
 load_dotenv()
-    
+
+PLAYER_COLUMNS = ('full_id', 'socket_id', 'display_name', 'efficiency', 'mastery', 'artistry', 'inventory')
+
+# ----------db---------- #
 def get_db_connection():
     database_url = os.getenv('DATABASE_URL')
     if not database_url:
@@ -21,37 +24,25 @@ def close_conn_cur(conn, cur, commit=False):
     cur.close()
     conn.close()
 
-def get_player(name):
-    conn, cur = get_conn_cur(cursor=RealDictCursor)
-    cur.execute('SELECT * FROM players WHERE name = %s', (name,))
-    player = cur.fetchone()
-    close_conn_cur(conn, cur)
-    if player:
-        if 'created_at' in player and player['created_at']:
-            player['created_at'] = player['created_at'].isoformat()
-    return player 
-
-def create_player(player_id, name):
+# ----------player---------- #
+def create_player(full_id, display_name):
     conn, cur = get_conn_cur()
-    inventory = {
-        'wood': 0, 'stone': 0, 'copper': 0, 'tin': 0,
-        'iron': 0, 'water': 0, 'herbs': 0, 'fiber': 0, 'clay': 0,
-    }
+    inventory = {}
     cur.execute('''
-        INSERT INTO players (id, name, efficiency, mastery, artistry, inventory)
+        INSERT INTO players (full_id, display_name, efficiency, mastery, artistry, inventory)
         VALUES (%s, %s, %s, %s, %s, %s)
-    ''', (player_id, name, 100, 20, 0, json.dumps(inventory)))
+    ''', (full_id, display_name, 0, 0, 0, json.dumps(inventory)))
     close_conn_cur(conn, cur, commit=True)
     return {
-        'id': player_id,
-        'name': name,
-        'efficiency': 100,
-        'mastery': 20,
+        'full_id': full_id,
+        'display_name': display_name,
+        'efficiency': 0, # TODO: random stats
+        'mastery': 0,
         'artistry': 0,
         'inventory': inventory,
     }
 
-def update_player(player_id, player_data):
+def update_player(full_id, player_data):
     conn, cur = get_conn_cur()
     inventory_json = json.dumps(player_data.get('inventory', {}))
     cur.execute('''
@@ -60,13 +51,32 @@ def update_player(player_id, player_data):
             mastery = %s,
             artistry = %s,
             inventory = %s
-        WHERE id = %s
+        WHERE full_id = %s
     ''', (
-        player_data.get('efficiency', 100),
-        player_data.get('mastery', 20),
+        player_data.get('efficiency', 0),
+        player_data.get('mastery', 0),
         player_data.get('artistry', 0),
         inventory_json,
-        player_id
+        full_id,
     ))
     close_conn_cur(conn, cur, commit=True)
+
+def update_player_socket_id(full_id, socket_id):
+    conn, cur = get_conn_cur()
+    cur.execute('''
+        UPDATE players 
+        SET socket_id = %s 
+        WHERE full_id = %s
+    ''', (socket_id, full_id))
+    close_conn_cur(conn, cur, commit=True)
+
+def get_all_players(*cols):
+    conn, cur = get_conn_cur(cursor=RealDictCursor)
+    columns = ', '.join(col for col in cols if col in PLAYER_COLUMNS)
+    if not columns: 
+        columns = '*'
+    cur.execute(f'SELECT {columns} FROM players')
+    players = cur.fetchall()
+    close_conn_cur(conn, cur)
+    return players
 

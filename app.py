@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_socketio import SocketIO, emit
 import database as db
+import helpers as help
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -27,20 +28,33 @@ def handle_disconnect():
 
 @socketio.on('join')
 def handle_join(data):
-    name = data.get('name', '_unnamed_player').strip()
-    player_id = request.sid
-    existing_player = db.get_player(name)
-    if existing_player:
-        print(f'OLD player joins: {name}')
-        player_data = dict(existing_player)
-        player_data['id'] = player_id
-        active_players[player_id] = player_data
-        emit('join_success', {'player': player_data})
-    else:
-        print(f'NEW player joins: {name}')
-        player_data = db.create_player(player_id, name)
-        active_players[player_id] = player_data
-        emit('join_success', {'player': player_data})
+    # TODO handle sessions and persistence: currently, every new join creates new players
+    # get display name
+    display_name = data.get('displayName', 'somehow_unnamed').strip()
+    # get all player ids
+    all_players = db.get_all_players('full_id')
+    existing_ids = [p['full_id'] for p in all_players if p.get('full_id')]
+    # give new player unique id
+    full_id = help.generate_player_id(display_name, existing_ids)
+    # create new player
+    player_data = db.create_player(full_id, display_name)
+    # request, update player socket id
+    socket_id = request.sid
+    db.update_player_socket_id(full_id, socket_id)
+    active_players[full_id] = {
+        'full_id': full_id,
+        'socket_id': socket_id,
+        'display_name': display_name,
+        'efficiency': player_data['efficiency'],
+        'mastery': player_data['mastery'],
+        'artistry': player_data['artistry'],
+        'inventory': player_data['inventory']
+    }
+    emit('join_success', {
+        'player': player_data,
+        'full_id': full_id,
+        'display_name': display_name
+    })
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

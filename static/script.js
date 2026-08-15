@@ -2,21 +2,20 @@
 var socket = io();
 
 function joinGame() {
-    var nameInput = document.getElementById('player-name-input');
-    var name = nameInput.value.trim();
+    var displayNameInput = document.getElementById('display-name-input');
+    var displayName = displayNameInput.value.trim();
     
-    if (!name) {
-        name = 'Player_' + Math.floor(Math.random() * 10000);
-        nameInput.value = name;
+    if (!displayName) {
+        displayName = 'player_' + Math.floor(Math.random() * 10000);
+        displayNameInput.value = displayName;
     }
-
-    socket.emit('join', {name: name});
+    socket.emit('join', {displayName: displayName});
 }
 socket.on('join_success', function(data) {
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('game-container').style.display = 'grid';
     
-    document.getElementById('player-name').textContent = data.name;
+    document.getElementById('display-name').textContent = data.name;
 });
 
 document.querySelectorAll('nav a').forEach(function(link) {
