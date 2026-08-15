@@ -1,4 +1,3 @@
-import random
 import secrets
 
 MAX_NAME_CHARS = 20

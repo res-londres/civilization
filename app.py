@@ -16,15 +16,17 @@ def home():
 
 @socketio.on('connect')
 def handle_connect():
-    print('someone connects..')
+    print('[CONNECT] someone connects..')
 
 @socketio.on('disconnect')
 def handle_disconnect():
-    player_id = request.sid
-    if player_id in active_players:
-        print(f'saving {active_players[player_id]["name"]} before disconnect..')
-        db.update_player(player_id, active_players[player_id])
-        del active_players[player_id]
+    socket_id = request.sid
+    for full_id, player in list(active_players.items()):
+        if player.get('socket_id') == socket_id:
+            print(f'[DISCONNECT] saving {full_id} before disconnect..')
+            db.update_player(full_id, player)
+            del active_players[full_id]
+            break
 
 @socketio.on('join')
 def handle_join(data):
