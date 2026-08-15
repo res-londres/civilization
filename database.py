@@ -80,3 +80,11 @@ def get_all_players(*cols):
     close_conn_cur(conn, cur)
     return players
 
+def get_player_by_full_id(full_id):
+    conn, cur = get_conn_cur(cursor=RealDictCursor)
+    cur.execute('SELECT * FROM players WHERE full_id = %s', (full_id,))
+    player_data = cur.fetchone()
+    close_conn_cur(conn, cur)
+    if player_data and 'created_at' in player_data and player_data['created_at']:
+        player_data['created_at'] = player_data['created_at'].isoformat()
+    return player_data
