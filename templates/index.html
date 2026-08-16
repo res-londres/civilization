@@ -12,7 +12,7 @@
             <img src="../static/images/sol-invictus.png" width="150px" height="150px" loading="lazy">
             <h1>CIVILIZATION</h1>
             <p>Enter your name to join the world</p>
-            <input type="text" id="display-name-input" placeholder="Enter your name..." onkeydown="if (event.key === 'Enter') joinGame();">
+            <input type="text" id="display-name-input" placeholder="Enter your name..." onkeydown="if (event.key === 'Enter') joinGame();" maxLength="11">
             <p id="invalid-name-message"></p>
             <button id="join-button" onclick="joinGame()">Join World</button>
         </div>
@@ -22,7 +22,10 @@
         <section class="left-sidebar">
             <h1>CIVILIZATION</h1>
             <div class="profile-card">
-                <h3 id="display-name">_unnamed_player</h3>
+                <div class="name-container">
+                    <h3 id="display-name">mmmmmmmmmmm</h3>
+                    <h3 id="id-tag">#12345</h3>
+                </div>
                 <p>Efficiency: <span id="efficiency">NONE</span></p>
                 <p>Mastery: <span id="mastery">NONE</span></p>
                 <p>Artistry: <span id="artistry">0</span></p>

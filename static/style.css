@@ -112,13 +112,18 @@ body {
     color: #7F2122;
     transform: scale(1.05);
 }
-.profile-card h3 {
-    color: #FACD1E;
-    padding-bottom: 0.5rem;
-}
 .profile-card p {
     font-size: 14px;
     padding: 2px;
+}
+.profile-card .name-container {
+    padding-bottom: 0.5rem;
+}
+.profile-card #display-name {
+    color: #FACD1E;
+}
+.profile-card #id-tag {
+    color: #face1e88;
 }
 
 /* ----------nav----------- */

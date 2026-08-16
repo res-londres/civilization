@@ -61,7 +61,11 @@ function joinGame() {
 
 function updatePlayerData(player) {
     if (!player) return;
-    document.getElementById('display-name').textContent = player.display_name || 'somehow_unnamed';
+    const parts = player.full_id.split('#');
+    const displayName = parts[0];
+    const idTag = `#${parts[1]}`;
+    document.getElementById('display-name').textContent = displayName || 'somehow_unnamed';
+    document.getElementById('id-tag').textContent = idTag || '#12345';
     document.getElementById('efficiency').textContent = (player.efficiency || 0) + '%';
     document.getElementById('mastery').textContent = (player.mastery || 0) + '%';
     document.getElementById('artistry').textContent = player.artistry || 0;
