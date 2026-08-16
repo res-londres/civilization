@@ -1,5 +1,6 @@
 import os
 import json
+import random
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from dotenv import load_dotenv
@@ -25,6 +26,10 @@ def close_conn_cur(conn, cur, commit=False):
     conn.close()
 
 # ----------player---------- #
+EFFICIENCY_MU = 100
+EFFICIENCY_SIGMA = 2
+MASTERY_MU = 50
+MASTERY_SIGMA = 5
 def create_player(full_id, display_name):
     conn, cur = get_conn_cur()
     inventory = {}
@@ -36,8 +41,8 @@ def create_player(full_id, display_name):
     return {
         'full_id': full_id,
         'display_name': display_name,
-        'efficiency': 0, # TODO: random stats
-        'mastery': 0,
+        'efficiency': int(random.gauss(EFFICIENCY_MU, EFFICIENCY_SIGMA)),
+        'mastery': int(MASTERY_MU + abs(random.gauss(0, MASTERY_SIGMA))),
         'artistry': 0,
         'inventory': inventory,
     }
