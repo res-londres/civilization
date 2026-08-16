@@ -21,6 +21,8 @@ socket.on('join_success', function(data) {
     }
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('game-container').style.display = 'grid';
+    document.getElementById('display-name-input').value = '';
+    document.getElementById('join-button').textContent = 'Join World';
     updatePlayerData(data.player);
 });
 socket.on('join_error', function(data) {
@@ -55,7 +57,6 @@ function joinGame() {
     }
     joinButton.disabled = true;
     joinButton.textContent = 'Connecting...';
-    displayNameInput.textContent = '';
     socket.emit('join', {displayName: displayName});
 }
 
