@@ -14,7 +14,7 @@ body {
 /* ----------login---------- */
 #login-container {
     align-items: center;
-    background-image: url("../assets/images/red-texture.png");
+    background-image: url('/static/images/red-texture.png');
     display: flex;
     justify-content: center;
     min-height: 100vh;
@@ -68,7 +68,7 @@ body {
 
 /* ----------game----------- */
 #game-container {
-    background-image: url("../assets/images/red-texture.png");
+    background-image: url('/static/images/red-texture.png');
     display: grid;
     grid-template-columns: 250px 1fr 300px;
     min-height: 100vh;
