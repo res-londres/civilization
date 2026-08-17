@@ -185,12 +185,18 @@ function setupResourceClickHandlers() {
     document.querySelectorAll('.resource-container').forEach(function(container) {
         container.addEventListener('click', function() {
             var resourceName = this.dataset.resource;
-            document.querySelectorAll('.resource-container').forEach(function(el) {
-                el.classList.remove('resource-active');
-            });
-            this.classList.add('resource-active');
-            console.log(`gathering resource: ${resourceName}`);
-            socket.emit('gather', { resource: resourceName }); // TODO: handle this in server
+            if (this.classList.contains('resource-active')) {
+                this.classList.remove('resource-active');
+                console.log(`stop gathering: ${resourceName}`);
+                socket.emit('stop-gather');
+            } else {
+                document.querySelectorAll('.resource-container').forEach(function(el) {
+                    el.classList.remove('resource-active');
+                });
+                this.classList.add('resource-active');
+                console.log(`gathering resource: ${resourceName}`);
+                socket.emit('gather', { resource: resourceName }); // TODO: handle this in server
+            }
         });
     });
 }
@@ -216,17 +222,6 @@ function updateResourceAmount(resourceName, newAmount) {
     if (amountElement) {
         var displayAmount = Math.round(newAmount);
         amountElement.textContent = displayAmount;
-        var resource = resourceData[resourceName];
-        if (resource && resource.maxAmount) {
-            var percentage = newAmount / resource.maxAmount;
-            if (percentage > 0.6) {
-                amountElement.style.color = '#2ecc71';
-            } else if (percentage > 0.3) {
-                amountElement.style.color = '#f1c40f';
-            } else {
-                amountElement.style.color = '#e74c3c';
-            }
-        }
     }
 }
 
