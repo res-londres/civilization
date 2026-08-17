@@ -11,6 +11,9 @@
 body {
     min-height: 100vh;
 }
+button {
+    user-select: none;
+}
 /* ----------login---------- */
 #login-container {
     align-items: center;
@@ -131,6 +134,7 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    user-select: none;
 }
 nav a {
     border-radius: 4px;
@@ -150,19 +154,6 @@ nav a.active {
     font-weight: bold;
 }
 
-/* ----------content----------- */
-.content {
-    background: #E5DBB7;
-    padding: 1.25rem;
-    overflow-y: auto;
-}
-.page-content {
-    background: #FFF5E6;
-    border-radius: 8px;
-    padding: 1.5rem;
-    min-height: 95vh;
-}
-
 /* ----------right-sidebar----------- */
 .right-sidebar {
     background: transparent;
@@ -179,6 +170,62 @@ nav a.active {
     padding: 1rem;
     flex: 1;
 }
+
+/* ----------content----------- */
+.content {
+    background: #E5DBB7;
+    padding: 1.25rem;
+    overflow-y: auto;
+}
+.page-content {
+    background: #FFF5E6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-height: 95vh;
+}
+.page-content h1 {
+    border-bottom: 2px solid #D32929;
+    color: #D32929;
+    margin-bottom: 1rem;
+}
+
+/* ----------resources-page---------- */
+.resource-container {
+    background: #7F2122;
+    border-radius: 0.5rem;
+    color: #FFF5E6;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 1fr;
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    transition: all 0.3s;
+    user-select: none;
+}
+.resource-name {
+    text-align: left;
+    font-weight: bold;
+}
+.resource-gatherers-container {
+    text-align: right;
+}
+.resource-container:hover {
+    background: #D32929;
+    color: #FACD1E;
+    cursor: pointer;
+    padding: 0.5rem 1.25rem;
+}
+.resource-active {
+    background: #FACD1E;
+    color: #7F2122;
+    transform: scale(1.05);
+}
+.resource-active:hover {
+    background: #FACD1E;
+    color: #7F2122;
+    transform: scale(1.05);
+}
+
 
 /*
 Rose (#D32929), Gold Bar (#FACD1E), Shiny Pearl (#FFF5E6), Aged Paper (#E5DBB7), Comfort Khaki (#CAC198) and Dark Rose (#7F2122)
