@@ -49,7 +49,7 @@ function deleteCookie(name) {
     console.log('cookie deleted:', name);
 }
 
-// ----------socket-stuff---------- //
+// ----------socket-listeners---------- //
 socket.on('join_success', function(data) {
     if (data.set_cookie) {
         setCookie('player_id', data.full_id, 365);
@@ -73,6 +73,9 @@ socket.on('session_cleared', function(data) {
     }
     document.getElementById('game-container').style.display = 'none';
     document.getElementById('login-container').style.display = 'flex';
+});
+socket.on('resources_update', function(data) {
+    updateResourcesFromServer(data.resources);
 });
 
 // -----------auth---------- //
@@ -158,18 +161,7 @@ function showPage(page) {
 }
 
 // ----------resource-page---------- //
-// SAMPLE RESOURCE DATA //
-var RESOURCE_DATA = [
-    { name: 'wood', displayName: 'Wood', amount: 1000, maxAmount: 1000, recoveryRate: 10.00, gatherers: 0 },
-    { name: 'stone', displayName: 'Stone', amount: 800, maxAmount: 1000, recoveryRate: 8.00, gatherers: 0 },
-    { name: 'copper', displayName: 'Copper', amount: 500, maxAmount: 800, recoveryRate: 5.00, gatherers: 0 },
-    { name: 'tin', displayName: 'Tin', amount: 300, maxAmount: 600, recoveryRate: 4.00, gatherers: 0 },
-    { name: 'iron', displayName: 'Iron', amount: 200, maxAmount: 500, recoveryRate: 3.00, gatherers: 0 },
-    { name: 'water', displayName: 'Water', amount: 2000, maxAmount: 2500, recoveryRate: 20.00, gatherers: 0 },
-    { name: 'herbs', displayName: 'Herbs', amount: 400, maxAmount: 600, recoveryRate: 5.00, gatherers: 0 },
-    { name: 'fiber', displayName: 'Fiber', amount: 500, maxAmount: 700, recoveryRate: 6.00, gatherers: 0 },
-    { name: 'clay', displayName: 'Clay', amount: 600, maxAmount: 800, recoveryRate: 7.00, gatherers: 0 }
-];
+var resourceData = {};
 
 function createResourceHTML(resource) {
     return `
@@ -198,18 +190,57 @@ function setupResourceClickHandlers() {
             });
             this.classList.add('resource-active');
             console.log(`gathering resource: ${resourceName}`);
+            socket.emit('gather', { resource: resourceName }); // TODO: handle this in server
         });
     });
 }
 
 function renderResources() {
     var container = document.getElementById('page-resources');
+    // show loading if no resource data
+    if (Object.keys(resourceData).length === 0) {
+        container.innerHTML = '<h1>Resources</h1><p>Loading resources...</p>';
+        return;
+    }
     var html = '<h1>Resources</h1>';
-    
-    RESOURCE_DATA.forEach(function(resource) {
+    var resources = Object.values(resourceData);
+    resources.forEach(function(resource) {
         html += createResourceHTML(resource);
     });
-    
     container.innerHTML = html;
+    setupResourceClickHandlers();
 }
 
+function updateResourceAmount(resourceName, newAmount) {
+    var amountElement = document.getElementById('resource-amount-' + resourceName);
+    if (amountElement) {
+        var displayAmount = Math.round(newAmount);
+        amountElement.textContent = displayAmount;
+        var resource = resourceData[resourceName];
+        if (resource && resource.maxAmount) {
+            var percentage = newAmount / resource.maxAmount;
+            if (percentage > 0.6) {
+                amountElement.style.color = '#2ecc71';
+            } else if (percentage > 0.3) {
+                amountElement.style.color = '#f1c40f';
+            } else {
+                amountElement.style.color = '#e74c3c';
+            }
+        }
+    }
+}
+
+function updateResourcesFromServer(data) {
+    // data = { wood: { name: 'wood', displayName: 'Wood', amount: 1500, maxAmount: 2500, ... }, ... }
+    for (var name in data) {
+        resourceData[name] = data[name];
+    }
+    // if first time, render everything
+    if (document.getElementById('page-resources').querySelector('.resource-container') === null) {
+        renderResources();
+    } else {
+        for (var resourceName in data) {
+            updateResourceAmount(resourceName, data[resourceName]['amount']);
+        }
+    }
+}

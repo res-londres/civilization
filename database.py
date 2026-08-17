@@ -93,3 +93,28 @@ def get_player_by_full_id(full_id):
     if player_data and 'created_at' in player_data and player_data['created_at']:
         player_data['created_at'] = player_data['created_at'].isoformat()
     return player_data
+
+# ----------resources---------- #
+def get_all_resources():
+    conn, cur = get_conn_cur(cursor=RealDictCursor)
+    cur.execute('SELECT * FROM resources ORDER BY name')
+    resources = cur.fetchall()
+    close_conn_cur(conn, cur)
+    return resources
+
+def get_resource(name):
+    conn, cur = get_conn_cur(cursor=RealDictCursor)
+    cur.execute('SELECT * FROM resources WHERE name = %s', (name,))
+    resource = cur.fetchone()
+    close_conn_cur(conn, cur)
+    return resource
+
+def update_resource_amount(name, new_amount):
+    conn, cur = get_conn_cur()
+    cur.execute('''
+        UPDATE resources 
+        SET amount = %s,
+            updated_at = NOW()
+        WHERE name = %s
+    ''', (new_amount, name))
+    close_conn_cur(conn, cur, commit=True)
