@@ -19,4 +19,4 @@
 > I realized a game, especially such as this, would not be engaging enough for my target audience.
 > I moved on to build an anonymous social web app instead to generate more engagement.
 > 
-> Check out my new project: [Wallhalla](https://github.com/res-londres/anon-wall)
+> Check out my new project: [AnonWall](https://github.com/res-londres/anon-wall)
